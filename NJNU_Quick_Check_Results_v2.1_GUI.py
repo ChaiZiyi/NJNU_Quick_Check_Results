@@ -14,6 +14,8 @@ url4 = 'http://223.2.10.26/student/xscj.stuckcj.jsp?menucode=JW130706'
 url5 = 'http://223.2.10.26/jw/common/showYearTerm.action'
 url6 = 'http://223.2.10.26/student/xscj.stuckcj_data.jsp'
 
+photourl = 'http://223.2.10.123/jwgl/photos/rx20'
+
 header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\
 /537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36'}
 
@@ -116,6 +118,8 @@ class MyFrame(wx.Frame):
         self.button_2 = wx.Button(self.panel, wx.ID_ANY, u'查询', size=(70, 30))
         self.text_ctrl_4 = wx.TextCtrl(
             self.panel, wx.ID_ANY, style=wx.TE_MULTILINE | wx.TE_READONLY)
+        self.static_bitmap_1 = wx.StaticBitmap(
+            self.panel, wx.ID_ANY, size=(105, 147))
         self.list_ctrl_1 = wx.ListCtrl(
             self.panel, wx.ID_ANY, style=wx.LC_REPORT)
 
@@ -145,11 +149,12 @@ class MyFrame(wx.Frame):
         sizer.Add(self.bitmap_button_1, (2, 2), (1, 1), wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.button_1, (3, 1), (1, 1), wx.ALL | wx.ALIGN_RIGHT, 5)
         sizer.Add(self.button_2, (3, 2), (1, 1), wx.ALL | wx.ALIGN_RIGHT, 5)
-        sizer.Add(self.text_ctrl_4, (0, 3), (4, 1), wx.EXPAND | wx.ALL, 5)
-        sizer.Add(self.list_ctrl_1, (4, 0), (1, 4), wx.EXPAND | wx.ALL, 5)
+        sizer.Add(self.static_bitmap_1, (0, 3), (4, 1), wx.EXPAND | wx.ALL, 5)
+        sizer.Add(self.text_ctrl_4, (0, 4), (4, 1), wx.EXPAND | wx.ALL, 5)
+        sizer.Add(self.list_ctrl_1, (4, 0), (1, 5), wx.EXPAND | wx.ALL, 5)
 
         sizer.AddGrowableRow(4, 1)
-        sizer.AddGrowableCol(3, 1)
+        sizer.AddGrowableCol(4, 1)
 
         self.panel.SetSizerAndFit(sizer)
 
@@ -160,9 +165,14 @@ class MyFrame(wx.Frame):
         self.text_ctrl_1.Clear()
         self.text_ctrl_2.Clear()
         self.text_ctrl_3.Clear()
+        self.text_ctrl_4.Clear()
+        self.static_bitmap_1.Hide()
+        self.list_ctrl_1.ClearAll()
         self.bitmap_button_1.SetBitmapLabel(getValidateCode())
 
     def OnSubmit(self, event):
+
+        self.static_bitmap_1.Hide()
         self.list_ctrl_1.ClearAll()
         username = self.text_ctrl_1.GetValue()
         pwd = self.text_ctrl_2.GetValue()
@@ -170,9 +180,22 @@ class MyFrame(wx.Frame):
         status = getStatus(username, pwd, yzm)
         self.text_ctrl_4.SetValue(status['message'])
         if status['status'] == '200':
+            year = username[2:4]
+            name = username + '.jpg'
+            turl = photourl + year + '/' + name
+            req = requests.get(turl, headers=header)
+            if req.headers.get('content-length') != '1163':
+                bitmap = wx.ImageFromStream(
+                    StringIO(req.content), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+                image = wx.ImageFromBitmap(bitmap)
+                image = image.Scale(105, 147, wx.IMAGE_QUALITY_HIGH)
+                result = wx.BitmapFromImage(image)
+                self.static_bitmap_1.SetBitmap(result)
+                self.static_bitmap_1.Show()
             info = getResults()[0]
             for i in info:
                 self.text_ctrl_4.AppendText('\n' + i)
+
             self.list_ctrl_1.InsertColumn(0, u'学期')
             self.list_ctrl_1.InsertColumn(1, u'序号')
             self.list_ctrl_1.InsertColumn(2, u'课程/环节')
