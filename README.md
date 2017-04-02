@@ -1,4 +1,4 @@
-# NJNU_Quick_Check_Results 南师大教务系统快速查分
+# 南师大教务系统快速查分
 
 ## v3.0
 
