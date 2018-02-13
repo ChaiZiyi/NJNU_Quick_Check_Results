@@ -12,12 +12,12 @@ from PIL import ImageEnhance
 import pytesseract
 import os
 
-url = 'http://223.2.10.26/cas/logon.action'
-url2 = 'http://223.2.10.26/cas/genValidateCode'
-url3 = 'http://223.2.10.26/frame/jw/teacherstudentmenu.jsp?menucode=JW1314'
-url4 = 'http://223.2.10.26/student/xscj.stuckcj.jsp?menucode=JW130706'
-url5 = 'http://223.2.10.26/jw/common/showYearTerm.action'
-url6 = 'http://223.2.10.26/student/xscj.stuckcj_data.jsp'
+url = 'http://223.2.10.23/cas/logon.action'
+url2 = 'http://223.2.10.23/cas/genValidateCode'
+url3 = 'http://223.2.10.23/frame/jw/teacherstudentmenu.jsp?menucode=JW1314'
+url4 = 'http://223.2.10.23/student/xscj.stuckcj.jsp?menucode=JW130706'
+url5 = 'http://223.2.10.23/jw/common/showYearTerm.action'
+url6 = 'http://223.2.10.23/student/xscj.stuckcj_data.jsp'
 
 photourl = 'http://223.2.10.123/jwgl/photos/rx20'
 
@@ -120,7 +120,7 @@ class MyFrame(wx.Frame):
     def __init__(self, *args, **kwds):
         wx.Frame.__init__(self, None, size=(1200, 600))
         self.icon = wx.Icon(resource_path('icon.ico'), wx.BITMAP_TYPE_ICO)
-        self.SetIcon(self.icon)  
+        self.SetIcon(self.icon)
         self.panel = wx.Panel(self)
         self.label_1 = wx.StaticText(self.panel, wx.ID_ANY, u'学号')
         self.text_ctrl_1 = wx.TextCtrl(
@@ -222,7 +222,7 @@ class MyFrame(wx.Frame):
             for k in range(0, 12):
                 self.list_ctrl_1.SetColumnWidth(k, wx.LIST_AUTOSIZE_USEHEADER)
 
- 
+
 if __name__ == '__main__':
     app = wx.App()
     frame = MyFrame(None)

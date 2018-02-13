@@ -7,12 +7,12 @@ from cStringIO import StringIO
 from bs4 import BeautifulSoup
 import sys
 
-url = 'http://223.2.10.26/cas/logon.action'
-url2 = 'http://223.2.10.26/cas/genValidateCode'
-url3 = 'http://223.2.10.26/frame/jw/teacherstudentmenu.jsp?menucode=JW1314'
-url4 = 'http://223.2.10.26/student/xscj.stuckcj.jsp?menucode=JW130706'
-url5 = 'http://223.2.10.26/jw/common/showYearTerm.action'
-url6 = 'http://223.2.10.26/student/xscj.stuckcj_data.jsp'
+url = 'http://223.2.10.23/cas/logon.action'
+url2 = 'http://223.2.10.23/cas/genValidateCode'
+url3 = 'http://223.2.10.23/frame/jw/teacherstudentmenu.jsp?menucode=JW1314'
+url4 = 'http://223.2.10.23/student/xscj.stuckcj.jsp?menucode=JW130706'
+url5 = 'http://223.2.10.23/jw/common/showYearTerm.action'
+url6 = 'http://223.2.10.23/student/xscj.stuckcj_data.jsp'
 
 photourl = 'http://223.2.10.123/jwgl/photos/rx20'
 
